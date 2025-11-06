@@ -1,0 +1,17 @@
+Co mamy zrobić
+
+a - odległośc między atomami
+G - wektro w przestrzeni odwrotnej
+tau - ??
+
+V_g^s - część symetryczna pseudo potencjału
+
+- Wyznaczyć czym są wektory G i tau dla sześcianu
+
+- Dodać do Hamiltonianu część związaną z potencjałem
+
+- Napisać funkcje tworzącą potencjał
+
+- Poprawić część kinetyczną o wektro G
+
+- Dobrać odpowienide parametry a, V_g^s
