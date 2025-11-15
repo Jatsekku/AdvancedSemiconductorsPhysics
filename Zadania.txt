@@ -1,17 +1,25 @@
-Co mamy zrobić
+Zadania na 21.11.25
 
-a - odległośc między atomami
-G - wektro w przestrzeni odwrotnej
-tau - ??
+-- Posprzątać w kodzie po usuwać nie potrzebne rzeczy.
 
-V_g^s - część symetryczna pseudo potencjału
+-- Zapytać się jak wygląda tau i g w częście potencjału
 
-- Wyznaczyć czym są wektory G i tau dla sześcianu
+Mikołaj:
+Ja to rozumiem tak (na razie tylko symetryczny układ)
 
-- Dodać do Hamiltonianu część związaną z potencjałem
+	V_ij = V_g*cos((g_i-g_j)*tau) np. dla V_12 = V_g*cos((g_1-g_2)*tau) 
 
-- Napisać funkcje tworzącą potencjał
+V_g wartośc numerczny zależna od G wyznaczana w krsytalografi jako form fators
 
-- Poprawić część kinetyczną o wektro G
+Jeśli |g_i-g_j|^2 = 3; 8; 11 to mamy odpwiednie V_g
 
-- Dobrać odpowienide parametry a, V_g^s
+Form factors 
+3 = -0.21
+8 = 0.04
+11 = 0.08
+Np jeśli |g_1-g_2|^2 = 8 to V_g jest 0.04 
+czyli V_12 = 0.04*cos((g_1-g_2)*tau) modulo jednosktki i stałe
+
+Jeśli |g_1-g_2|^2 nie równa się 3 lub 8 lub 11 to V_g jest 0
+
+
