@@ -4,22 +4,36 @@ Zadania na 21.11.25
 
 -- Zapytać się jak wygląda tau i g w częście potencjału
 
-Mikołaj:
-Ja to rozumiem tak (na razie tylko symetryczny układ)
+-- Ponieważ Form fators są w Rydbergach a ja dając h/2pi = e = m_e = 1 myślałem o jednostkach atomowych Hartree a relacje między jednostkami Rydberg Hartree jest:
 
-	V_ij = V_g*cos((g_i-g_j)*tau) np. dla V_12 = V_g*cos((g_1-g_2)*tau) 
+	1 Rydberg constant = 0.5 Hartree energy
 
-V_g wartośc numerczny zależna od G wyznaczana w krsytalografi jako form fators
+	Można też wrócić do eV wtedy 
+	1 Rydberg constant = 13.6057039763 eV
+	m_e = 0.5110 MeV
+	h/2pi = 6.582119569...×10e−16 eV⋅s
+	e = 1
+	
+------
+Co rozumiem w kwestji potencjału:
 
-Jeśli |g_i-g_j|^2 = 3; 8; 11 to mamy odpwiednie V_g
+	Mikołaj:
+	Ja to rozumiem tak (na razie tylko symetryczny układ)
 
-Form factors 
-3 = -0.21
-8 = 0.04
-11 = 0.08
-Np jeśli |g_1-g_2|^2 = 8 to V_g jest 0.04 
-czyli V_12 = 0.04*cos((g_1-g_2)*tau) modulo jednosktki i stałe
+		V_ij = V_g*cos((g_i-g_j)*tau) np. dla V_12 = V_g*cos((g_1-g_2)*tau) 
 
-Jeśli |g_1-g_2|^2 nie równa się 3 lub 8 lub 11 to V_g jest 0
+	V_g wartośc numerczny zależna od G wyznaczana w krsytalografi jako form fators
 
+	Jeśli |g_i-g_j|^2 = 3; 8; 11 to mamy odpwiednie V_g
+
+	Form factors 
+	3 = -0.21
+	8 = 0.04
+	11 = 0.08
+	Np jeśli |g_1-g_2|^2 = 8 to V_g jest 0.04 
+	czyli V_12 = 0.04*cos((g_1-g_2)*tau) modulo jednosktki i stałe
+
+	Jeśli |g_1-g_2|^2 nie równa się 3 lub 8 lub 11 to V_g jest 0
+
+	tau =  pozycja atomów w krysztale dla Si tau = 1/8 (a;a;a), dla GaAs tau_Ga = (0;0;0) zaś dla tau_As = 1/4(a;a;a)
 
