@@ -6,6 +6,7 @@ import math
 import numpy as np
 from numpy import linalg as LA
 import matplotlib.pyplot as plt
+e0 = 3.81 # eV*\AA^2
 
 # Building k space with periodic boundary conditions 
 def generate_k_space(nk, Lx):
@@ -25,13 +26,18 @@ def generate_k_space(nk, Lx):
 
 # Building reciprocal lattice vector G = n * 2 pi/a
 def generate_reciprocal_lattice(ngx, ngy, ngz, a):
+    b1 = 2*np.pi/a*np.array([-1,1,1])
+    b2 = 2*np.pi/a*np.array([1,-1,1])
+    b3 = 2*np.pi/a*np.array([1,1,-1])
+
     G_vectors = []
 
     for gz in np.arange(-ngz, ngz+1):
         for gy in np.arange(-ngy, ngy+1):
             for gx in np.arange(-ngx, ngx+1):
+                G = gx*b1 + gy*b2 + gz*b3
 
-                G_vectors.append([gx*np.pi/a,gy*np.pi/a,gz*np.pi/a])
+                G_vectors.append(G)
 
     return np.array(G_vectors, dtype=float)
 
@@ -61,10 +67,11 @@ def Hamiltonian(kx, ky, kz, reciprocal_lattice, f_factors, tau):
 
     G = reciprocal_lattice
     Gx, Gy, Gz = G.T
+    print(Gx)
     
     for i in range(M):
             # Diagonal
-            H[i,i] = 0.5*((kx+Gx[i])**2 +
+            H[i,i] = 0.5*e0*((kx+Gx[i])**2 +
                           (ky+Gy[i])**2 +
                           (kz+Gz[i])**2)
 
@@ -80,7 +87,7 @@ def Hamiltonian(kx, ky, kz, reciprocal_lattice, f_factors, tau):
                     x = potential(delta_G, tau, ff) if ff else 0
                     #print(x)
                     #print(f'X: {x}')
-                    H[i,j] = 0
+                    H[i,j] = x
 
     return H
 
@@ -90,9 +97,9 @@ def Hamiltonian(kx, ky, kz, reciprocal_lattice, f_factors, tau):
 Lx = 10         # A, the length of the cube
 L = Lx**3       # A^3, the volume of the cube (important diuring normalization)
 Nk = 2          # the number of the points in k space
-a = 5.65325     # A, Should not be equal Lx? 
-nG = 2
-tau = 1/2 * np.array([1, 1, 1])
+a = 5.43     # A, Should not be equal Lx? 
+nG = 1
+tau = 1/8 * np.array([1, 1, 1])
 
 
 
@@ -102,11 +109,11 @@ form_factors = {3.0: np.array(-0.21)* 13.6059,
 
 # Generate k space
 k_space = generate_k_space(Nk, Lx)
-plot_3d_space(k_space)
+#plot_3d_space(k_space)
 
 #Generate reciprocal lattice
 G = generate_reciprocal_lattice(nG, nG, nG, a)
-plot_3d_space(G)
+# plot_3d_space(G)
 
 G_dot_product = []
 for i in range(len(G)):
@@ -116,11 +123,14 @@ for i in range(len(G)):
 
 fig, ax = plt.subplots()
 
-kx = np.linspace(-np.pi/a, np.pi/a)
+kx = np.linspace(-np.pi*2/a, np.pi*2/a)
 
 for kxi in kx:
     H = Hamiltonian(kxi,0.0,0.0, G, form_factors, tau)    
-    E = LA.eigvalsh(H)                      # only real eigenvalues of energy
+    E = LA.eigvalsh(H)  
+    print(E)          
+    #E.sort()
+    #X = E[: 1]         # only real eigenvalues of energy
     Eigen_val_E = list(dict.fromkeys(E))    # unique values of E
     kxi_vecs = np.ones((1, len(Eigen_val_E)))
     plt.scatter(kxi*kxi_vecs, Eigen_val_E, c='blue', marker = '.')
