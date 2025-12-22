@@ -1,75 +1,23 @@
-Zadania na 19.12.25 i dalsze kroki
+Zadania na 16.01.26
+
+--Udało mi się zrobić kod dla GaAs, aby mieć dokładną strukturę pasmową trzeba uwzględnić:
+	- Spin orbite
+	- Powiększenie form_factors
+	- brak nielokalność
 
 -- Posprawdzać czy jednostki wciąż dobrze
-	Jednak Elektronovolty czyli 
-	m_e = 0.5110 MeV
-	h/2pi = 6.582119569...×10e−16 eV⋅s
-	e = 1
+	część kintetyczna
+		3.80998212  # eV·Å^2
+	form factors przepmnożone przez
+		13.6059
 	
--- Dodanie fragmentu o strefie Brillouena aby otrzymać odpowiedni wykres struktury pasmowej, zrobienie k-paths of high symmetry points
-	Fragmenty z tego kody na git jakie trzeba by było gdzieś umieścić:
----------------------------------------------------------------------------------------------	
-		def band_structure(lattice_constant, form_factors, reciprocal_basis, states, path):
-    
-			bands = []
-
-			# vstack concatenates our list of paths into one nice array
-			for k in np.vstack(path):
-				h = hamiltonian(lattice_constant, form_factors, reciprocal_basis, k, states)
-				eigvals = np.linalg.eigvals(h)
-				eigvals.sort()
-				# picks out the lowest eight eigenvalues
-				bands.append(eigvals[:8])
-
-			return np.stack(bands, axis=-1)
-----------------------------------------------
-		def linpath(a, b, n=50, endpoint=True):
-			'''
-			Creates an array of n equally spaced points along the path a -> b, inclusive.
-
-			args:
-				a: An iterable of numbers that represents the starting position.
-				b: An iterable of numbers that represents the ending position.
-				n: The integer number of sample points to calculate. Defaults to 50.
-				
-			returns:
-				A numpy array of shape (n, k) where k is the shortest length of either
-				iterable -- a or b.
-			'''
-			# list of n linear spacings between the start and end of each corresponding point
-			spacings = [np.linspace(start, end, num=n, endpoint=endpoint) for start, end in zip(a, b)]
-			
-			# stacks along their last axis, transforming a list of spacings into an array of points of len n
-			return np.stack(spacings, axis=-1)
-----------------------------------------------------------------
-
-		# sample points per k-path
-		n = 100
-
-		# symmetry points in the Brillouin zone
-		G = np.array([0, 0, 0])
-		L = np.array([1/2, 1/2, 1/2])
-		K = np.array([3/4, 3/4, 0])
-		X = np.array([0, 0, 1])
-		W = np.array([1, 1/2, 0])
-		U = np.array([1/4, 1/4, 1])
-
-		# k-paths
-		lambd = linpath(L, G, n, endpoint=False)
-		delta = linpath(G, X, n, endpoint=False)
-		x_uk = linpath(X, U, n / 4, endpoint=False)
-		sigma = linpath(K, G, n, endpoint=True)
------------------------------------------------------------------
-	
-
---- poprawić form factors dla Si tak jest napisane w książce 
+-- poprawić form factors dla Si tak jest napisane w książce 
 	3  -0.211
 	8  0.04
 	11 0.08
-
 ----------------------------------------------------------------
 
--- Jak się uda to przerobienie kodu dla innych materiałów np. Ge i GaAs
+-- Jak się uda to przerobienie kodu dla innych materiałów np. Ge 
 
 -- Dla Ge
 	a = 5.658 A
@@ -77,18 +25,7 @@ Zadania na 19.12.25 i dalsze kroki
 	3  -0.269
 	8   0.038
 	11  0.035
-	
--- Dla GaAs
-	a = 5.65325 A
-	G = 2\pi /a [-1, 1, 1] ; 2\pi /a [1, -1, 1]; 2\pi /a [1, 1, -1]
-	część symetryczna
-	3  -0.252
-	8   0.00
-	11  0.08
-	część asymetryczna
-	3 0.068
-	4 0.066
-	11 0.012
+ 
 	
 -- Ostateczny cel progam wyliczający form factors które można wklepywać do main kodu
 	Tu jeszcze będzie czytane jak to się robi
